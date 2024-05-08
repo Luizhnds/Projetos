@@ -1,58 +1,55 @@
-//Nome: Luiz Henrique Nogueira dos Santos
-//Número USP: 14755054
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-//Função para trocar os valores de dois elementos
+//FunÃ§Ã£o para trocar os valores de dois elementos
 void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-//Função para dividir o array e retornar o índice do pivô
+//FunÃ§Ã£o para dividir o array e retornar o Ã­ndice do pivÃ´
 int partition(int vetor[], int low, int high) {
-    int pivot = vetor[high]; //Escolhe o último elemento como pivô
-    int i = (low - 1); //Inicializa o índice do menor elemento
+    int pivot = vetor[high]; //Escolhe o Ãºltimo elemento como pivÃ´
+    int i = (low - 1); //Inicializa o Ã­ndice do menor elemento
 
-    //Percorre o array, rearranja os elementos menores que o pivô
+    //Percorre o array, rearranja os elementos menores que o pivÃ´
     for (int j = low; j <= high - 1; j++) {
         if (vetor[j] <= pivot) {
             i++;
-            swap(&vetor[i], &vetor[j]); //Troca elementos menores que o pivô para a esquerda
+            swap(&vetor[i], &vetor[j]); //Troca elementos menores que o pivÃ´ para a esquerda
         }
     }
 
-    swap(&vetor[i + 1], &vetor[high]); //Coloca o pivô na posição correta
-    return (i + 1); //Retorna o índice do pivô
+    swap(&vetor[i + 1], &vetor[high]); //Coloca o pivÃ´ na posiÃ§Ã£o correta
+    return (i + 1); //Retorna o Ã­ndice do pivÃ´
 }
 
-//Função principal do QuickSort
+//FunÃ§Ã£o principal do QuickSort
 void QuickSort(int vetor[], int low, int high) {
     if (low < high) {
-        int pi = partition(vetor, low, high); //Obtém o índice do pivô
-        //Ordena os elementos antes e depois do pivô recursivamente
+        int pi = partition(vetor, low, high); //ObtÃ©m o Ã­ndice do pivÃ´
+        //Ordena os elementos antes e depois do pivÃ´ recursivamente
         QuickSort(vetor, low, pi - 1);
         QuickSort(vetor, pi + 1, high);
     }
 }
 
 int main(){
-    //Declaração de variáveis
+    //DeclaraÃ§Ã£o de variÃ¡veis
     int *vetor;
     int tamanho, u;
-    //struct timespec inicio, fim;
-    //float tempo;
+    struct timespec inicio, fim;
+    float tempo;
 
     //Define o tamanho do vetor
     scanf("%d",&tamanho);
 
-    //Alocação de memória
+    //AlocaÃ§Ã£o de memÃ³ria
     vetor = (int *)calloc(tamanho,sizeof(int));
     if (vetor == NULL){
-        printf("Erro na alocação\n");
+        printf("Erro na alocaÃ§Ã£o\n");
         return 1;
     }
 
@@ -61,22 +58,22 @@ int main(){
         scanf("%d",&vetor[u]);
     }
 
-    //Medição do tempo de execução
-    //clock_gettime(CLOCK_MONOTONIC,&inicio);
+    //MediÃ§Ã£o do tempo de execuÃ§Ã£o
+    clock_gettime(CLOCK_MONOTONIC,&inicio);
     QuickSort(vetor,0,tamanho-1);
-    //clock_gettime(CLOCK_MONOTONIC,&fim);
-    //tempo = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
+    clock_gettime(CLOCK_MONOTONIC,&fim);
+    tempo = (fim.tv_sec - inicio.tv_sec) + (fim.tv_nsec - inicio.tv_nsec) / 1e9;
 
     //Imprimindo o vetor ordenado
     for(u=0;u<tamanho;u++){
         printf("%d ",vetor[u]);
     }
 
-    //Imprimindo o tempo de execução
-    //printf("\n");
-    //printf("Tempo de execucao: %.4f milisegundos",tempo*1000);
+    //Imprimindo o tempo de execuÃ§Ã£o
+    printf("\n");
+    printf("Tempo de execucao: %.4f milisegundos",tempo*1000);
 
-    //Liberando memória alocada
+    //Liberando memÃ³ria alocada
     free(vetor);
     return 0;
 }
